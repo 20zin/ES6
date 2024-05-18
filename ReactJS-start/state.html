@@ -7,13 +7,21 @@
     <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-        const root= document.getElementById("root"); 
+        const root= document.getElementById("root");
+        let counter = 0; 
+        function countUp(){
+            counter = counter + 1;
+            render();
+        }
+        function render(){
+            ReactDOM.render(<Container />, root); //Ui새로고침 2번 렌더링해야 카운트 올라감
+        }
         const Container = () => (
             <div>
-                <h3>"Hello Im a title"</h3>
-                <button>Click me</button>
+                <h3>"Total clicks: {counter}"</h3>
+                <button onClick={countUp}>Click me</button>
             </div>
         )
-        ReactDOM.render(<Container />, root);
+        render(); //처음 한번 렌더링
     </script>
 </html>
