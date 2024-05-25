@@ -8,24 +8,41 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         function App(){
-            const [minutes, setMinutes] = React.useState(); //array
+            const [amount, setAmount] = React.useState(); //array
+            const [filpped, setFlipped ] = React.useState(false);
             const onChange = (event) => {
-                setMinutes(event.target.value);
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current)
             };
             return(
             <div>
                 <h1>Super Converter</h1>
                 <label htmlFor="minutes">Minutes</label>
                 <input 
-                    value = {minutes}
+                    value = {filpped ? amount*60 : amount} //리스닝 데이터
                     id="minutes" 
                     placeholder = "Minutes" 
                     type="number"
                     onChange = {onChange}
+                    disabled = {filpped}
                 />
-                <h4>You want to convert {minutes}</h4>
-                <label for="minutes">hours</label>
-                <input id="hours" placeholder = "Hours" type="number" />
+                <div>
+                <label for="hours">hours</label>
+                <input 
+                    value = {filpped ? amount : Math.round(amount / 60)} //리스닝 데이터
+                    id="hours" 
+                    placeholder = "Hours" 
+                    type="number"
+                    disabled={!filpped}
+                    onChange = {onChange}
+                />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
             </div>
             );
         }
